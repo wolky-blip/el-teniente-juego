@@ -699,7 +699,10 @@ function actualizarEntidades() {
       case 'vagonetas':
         if (p.x < e.x - 30 && e.x - p.x < 420 && --e.cuenta <= 0) {   // nunca aparecen encima de Nato
           e.cuenta = e.cada;
-          S.ents.push({ tipo: 'vagoneta', vivo: true, x: e.x, y: e.y + 16 - 15, w: 24, h: 15, vx: -1.45, vy: 0, xFin: e.xFin, t: 0 });
+          // rueda sobre los rieles: se apoya en el primer piso que haya bajo el lanzador
+          let fila = Math.floor(e.y / T);
+          while (fila < S.N.alto - 1 && !SOLIDA[casilla(Math.floor((e.x + 12) / T), fila)]) fila++;
+          S.ents.push({ tipo: 'vagoneta', vivo: true, x: e.x, y: fila * T - 15, w: 24, h: 15, vx: -1.45, vy: 0, xFin: e.xFin, t: 0 });
           efecto('piedra'); rotulo(Math.min(e.x - 30, S.cam.x + W - 46), e.y - 8, '¡Vagoneta!', '#ffd25a', 7);   // siempre dentro de la pantalla
         }
         break;

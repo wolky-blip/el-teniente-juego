@@ -133,7 +133,7 @@ function construirNivel1() {
   letrero(99, 'ESCALERA DE EL FRAILE: baja a Fortuna 5 con ABAJO. Allá vienen vagonetas: ¡sáltalas!', 'ESCALERA DE EL FRAILE: baja a Fortuna 5 con el botón ABAJO. Allá vienen vagonetas: ¡sáltalas!');
   pepitas(101, 101, 26, 0);
   // Fortuna 5: rieles, vagonetas y piedras sueltas
-  ent('vagonetas', 125, 28, { xFin: 104 * T, cada: 280 });   // se pierden en un túnel lateral antes de la escalera
+  ent('vagonetas', 125, 29, { xFin: 104 * T, cada: 280 });   // ruedan por el piso de la galería y se pierden en un túnel lateral
   ent('piedra', 108, 26, {}); ent('piedra', 117, 26, {});
   ent('minero', 113, 28, { x0: 106 * T, x1: 121 * T });
   pepitas(104, 110, 28, 0); pepitas(114, 120, 27, 1);
