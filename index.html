@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<!-- agregado a la pantalla de inicio, se abre sin la barra del navegador (iPhone y Android) -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="El Teniente">
+<title>El Teniente: Nato y la ciudad de las escaleras</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #07060b; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+  body { display: flex; align-items: center; justify-content: center; font-family: 'Trebuchet MS', sans-serif; }
+  #pantalla { display: block; background: #000; box-shadow: 0 0 40px rgba(217,133,59,0.25); }
+  #tactil { display: none; position: fixed; inset: 0; pointer-events: none; }
+  body.es-tactil #tactil { display: block; }
+  .bt { position: absolute; pointer-events: auto; width: 64px; height: 64px; border-radius: 50%;
+        background: rgba(255,255,255,0.16); border: 2px solid rgba(255,255,255,0.45); color: #fff;
+        font: bold 22px 'Trebuchet MS', sans-serif; display: flex; align-items: center; justify-content: center;
+        text-shadow: 0 1px 2px #000; -webkit-tap-highlight-color: transparent; }
+  .bt.chico { width: 46px; height: 46px; font-size: 16px; }
+  #izq { left: 16px; bottom: 28px; } #der { left: 96px; bottom: 28px; }
+  #arr { left: 58px; bottom: 100px; } #aba { left: 58px; bottom: -36px; display: none; }
+  #saltar { right: 18px; bottom: 34px; background: rgba(90,180,90,0.30); }
+  #golpe { right: 96px; bottom: 20px; background: rgba(220,90,60,0.30); }
+  #pausa { right: 16px; top: 14px; }
+  #perro { right: 70px; bottom: 104px; background: rgba(217,133,59,0.35); }
+  #abajo2 { left: 136px; bottom: 100px; }
+  #completa { right: 72px; top: 14px; display: none; }
+  body.puede-completa:not(.en-completa) #completa { display: flex; }
+  #girar { display: none; position: fixed; inset: 0; background: #07060b; color: #ffcf6a; font-size: 20px;
+           align-items: center; justify-content: center; text-align: center; padding: 24px; }
+  @media (orientation: portrait) and (pointer: coarse) { #girar { display: flex; } }
+</style>
+</head>
+<body>
+<canvas id="pantalla"></canvas>
+<div id="tactil">
+  <div class="bt" id="izq" data-accion="izq">◀</div>
+  <div class="bt" id="der" data-accion="der">▶</div>
+  <div class="bt chico" id="arr" data-accion="arriba">▲</div>
+  <div class="bt chico" id="abajo2" data-accion="abajo">▼</div>
+  <div class="bt" id="golpe" data-accion="golpe">B</div>
+  <div class="bt" id="saltar" data-accion="saltar">A</div>
+  <div class="bt chico" id="perro" data-accion="perro">🐕</div>
+  <div class="bt chico" id="pausa" data-accion="pausa">❚❚</div>
+  <div class="bt chico" id="completa">⛶</div>
+</div>
+<div id="girar">Gira el teléfono para jugar ↻</div>
+<script src="js/voces.js"></script>
+<script src="js/sonidos.js"></script>
+<script src="js/logo.js"></script>
+<script src="assets/sprites/manifiesto.js"></script>
+<script src="assets/anim/anim.js"></script>
+<script src="js/texto.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/entrada.js"></script>
+<script src="js/nivel1.js"></script>
+<script src="js/nivel2.js"></script>
+<script src="js/nivel3.js"></script>
+<script src="js/nivel4.js"></script>
+<script src="js/juego.js"></script>
+</body>
+</html>
