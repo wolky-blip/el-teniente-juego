@@ -2916,6 +2916,10 @@ const ESC_TITULO = {
       dibujarTexto(ctx, (sel ? '▶ ' : '') + txt, W / 2, 92 + i * 13, { tam: 10, color: sel ? '#ffd25a' : '#ffffff', borde: '#1a1420', alinear: 'centro', grosor: 2.2 });
     });
     if (Math.floor(this.t / 30) % 2) dibujarTexto(ctx, ENTRADA.esTactil ? 'Toca para empezar' : 'ENTER para elegir · flechas para moverte', W / 2, 146, { tam: 6, color: '#e8e0cf', alinear: 'centro', borde: '#1a1420' });
+    if (ES_IOS && !esApp()) {   // en iPhone el navegador no deja pantalla completa: se instala en la pantalla de inicio
+      caja(ctx, W / 2 - 108, 153, 216, 11, 'rgba(10,12,24,0.75)', '#d9853b');
+      dibujarTexto(ctx, 'Pantalla completa: toca Compartir ⬆ y «Agregar a inicio»', W / 2, 155, { tam: 5.6, color: '#ffd58a', alinear: 'centro' });
+    }
     dibujarTexto(ctx, 'Un juego de Wolky Tech · basado en el libro de Pedro Villagra Díaz', W / 2, 166, { tam: 5.5, color: '#cfd8e8', alinear: 'centro', borde: '#1a1420' });
   },
 };
@@ -3524,7 +3528,9 @@ function bucle(ahora) {
   dibujar();
 }
 function ajustarTamano() {
-  const r = Math.min(window.innerWidth / (W * ESC), window.innerHeight / (H * ESC));
+  // el área que de verdad se ve (en el celular, sin las barras del navegador)
+  const vv = window.visualViewport, ancho = vv ? vv.width : window.innerWidth, alto = vv ? vv.height : window.innerHeight;
+  const r = Math.min(ancho / (W * ESC), alto / (H * ESC));
   lienzo.style.width = Math.floor(W * ESC * r) + 'px';
   lienzo.style.height = Math.floor(H * ESC * r) + 'px';
 }
@@ -3536,6 +3542,8 @@ window.addEventListener('load', () => {
   ctx.imageSmoothingQuality = 'high';
   ajustarTamano();
   window.addEventListener('resize', ajustarTamano);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', ajustarTamano);
+  window.addEventListener('orientationchange', () => setTimeout(ajustarTamano, 350));   // el iPhone tarda en informar el tamaño nuevo
   prepararTactil();
   lienzo.addEventListener('pointerdown', () => { iniciarAudio(); if (['titulo', 'trucos', 'tarjeta', 'resumen', 'continuara', 'creditos', 'memoria', 'saltoTiempo', 'proximamente', 'silencio', 'patrimonio', 'plazaFinal'].includes(J.nombre)) J.toque = true; });
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, lienzo.width, lienzo.height);

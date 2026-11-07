@@ -91,6 +91,12 @@ function prepararTactil() {
 // Pantalla completa en el celular: se pide sola al primer toque (sin barra de direcciones) y queda el botón ⛶
 // por si el jugador sale. El navegador solo la permite al soltar un toque. En iPhone no existe: ahí se usa
 // «Agregar a pantalla de inicio», que abre el juego sin barra gracias a las etiquetas meta de index.html.
+// iPhone/iPad (todos sus navegadores usan el motor de Safari, que no permite pantalla completa en una página)
+const ES_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// abierto como app desde la pantalla de inicio: ya está a pantalla completa
+function esApp() {
+  return !!(navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches));
+}
 function enPantallaCompleta() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
 function pedirPantallaCompleta() {
   const d = document.documentElement, pedir = d.requestFullscreen || d.webkitRequestFullscreen;
@@ -103,7 +109,7 @@ function pedirPantallaCompleta() {
 }
 function prepararPantallaCompleta() {
   const d = document.documentElement;
-  if (!(d.requestFullscreen || d.webkitRequestFullscreen)) return;
+  if (esApp() || !(d.requestFullscreen || d.webkitRequestFullscreen)) return;
   document.body.classList.add('puede-completa');
   let salio = false;   // si el jugador la cerró, no se vuelve a pedir sola: para eso está el botón
   const cambio = () => { const en = enPantallaCompleta(); document.body.classList.toggle('en-completa', en); if (!en) salio = true; };
